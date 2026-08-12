@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "google-auth-library": "^10.9.0",
+    "jsonwebtoken": "^9.0.3"
+  }
+}
