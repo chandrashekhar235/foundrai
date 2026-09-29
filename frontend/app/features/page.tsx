@@ -1,11 +1,10 @@
-import Features from "@/components/landing/Features";
 import Navbar from "@/components/layout/Navbar";
+import Features from "@/components/landing/Features";
 export default function FeaturesPage() {
-
-  return(
-  <>
-  <Navbar />;
-  <Features />;
-  </>
-  );
-}
+return (
+    <>
+    <Navbar />
+    <Features />
+    </>
+)
+};

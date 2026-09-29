@@ -7,7 +7,7 @@ export default function Workflow() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="py-28 px-6">
+    <section className="py-12 px-6">
       <div className="mx-auto max-w-4xl">
         {/* Heading */}
         <h2 className="text-center text-6xl font-extrabold tracking-tight text-white">
