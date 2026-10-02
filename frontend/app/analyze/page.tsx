@@ -3,8 +3,28 @@
 import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 
-export default function AnalyzePage() {
+type KnowledgeItem = {
+  type: string;
+  text: string;
+  similarity: number;
+};
 
+type AnalysisResult = {
+  startup: {
+    startupName: string;
+    idea: string;
+    industry: string;
+    targetCustomer: string;
+    location: string;
+    problem: string;
+    solution: string;
+    businessModel: string;
+  };
+  classification: string;
+  retrieved_knowledge: KnowledgeItem[];
+};
+
+export default function AnalyzePage() {
   const [formData, setFormData] = useState({
     startupName: "",
     idea: "",
@@ -16,6 +36,9 @@ export default function AnalyzePage() {
     businessModel: "",
   });
 
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -28,38 +51,57 @@ export default function AnalyzePage() {
     });
   };
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setLoading(true);
+    setError("");
+    setResult(null);
+
     try {
-        const response = await fetch("http://localhost:5000/api/analyze", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
+      const response = await fetch(
+        "http://localhost:5001/api/analyze",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
-        const data = await response.json();
+      const data = await response.json();
 
-        console.log("Analysis response:", data);
+      if (!response.ok) {
+        throw new Error(data.error || "Analysis failed");
+      }
+
+      console.log("FoundrAI Result:", data);
+
+      setResult(data.data);
     } catch (error) {
-        console.error("Error:", error);
+      console.error("Error analyzing startup:", error);
+
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong"
+      );
+    } finally {
+      setLoading(false);
     }
-};
+  };
+
   return (
     <>
       <Navbar />
 
       <main className="min-h-screen bg-[#0A0A0A] px-6 py-12 text-white">
-
         <div className="mx-auto max-w-4xl">
 
           {/* Heading */}
 
           <div className="mb-10 text-center">
-
             <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-500">
               FoundrAI Analysis
             </p>
@@ -73,9 +115,7 @@ export default function AnalyzePage() {
               FoundrAI will use this information to generate your
               startup analysis.
             </p>
-
           </div>
-
 
           {/* Form */}
 
@@ -102,7 +142,6 @@ export default function AnalyzePage() {
               />
             </div>
 
-
             {/* Startup Idea */}
 
             <div>
@@ -121,7 +160,6 @@ export default function AnalyzePage() {
               />
             </div>
 
-
             {/* Industry */}
 
             <div>
@@ -136,7 +174,6 @@ export default function AnalyzePage() {
                 className="w-full rounded-xl border border-zinc-700 bg-[#0A0A0A] px-4 py-3 text-white outline-none focus:border-blue-500"
                 required
               >
-
                 <option value="">
                   Select industry
                 </option>
@@ -168,10 +205,8 @@ export default function AnalyzePage() {
                 <option value="other">
                   Other
                 </option>
-
               </select>
             </div>
-
 
             {/* Target Customer */}
 
@@ -191,7 +226,6 @@ export default function AnalyzePage() {
               />
             </div>
 
-
             {/* Location */}
 
             <div>
@@ -209,7 +243,6 @@ export default function AnalyzePage() {
                 required
               />
             </div>
-
 
             {/* Problem */}
 
@@ -229,7 +262,6 @@ export default function AnalyzePage() {
               />
             </div>
 
-
             {/* Solution */}
 
             <div>
@@ -248,7 +280,6 @@ export default function AnalyzePage() {
               />
             </div>
 
-
             {/* Business Model */}
 
             <div>
@@ -266,20 +297,178 @@ export default function AnalyzePage() {
               />
             </div>
 
+            {/* Error */}
+
+            {error && (
+              <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-400">
+                {error}
+              </div>
+            )}
 
             {/* Submit */}
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-blue-600 px-6 py-4 text-lg font-bold transition hover:bg-blue-500"
+              disabled={loading}
+              className="w-full rounded-xl bg-blue-600 px-6 py-4 text-lg font-bold transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Analyze My Startup →
+              {loading
+                ? "Analyzing your startup..."
+                : "Analyze My Startup →"}
             </button>
 
           </form>
 
-        </div>
+          {/* ========================= */}
+          {/* ANALYSIS RESULT */}
+          {/* ========================= */}
 
+          {result && (
+            <section className="mt-12 space-y-6">
+
+              {/* Result Header */}
+
+              <div className="rounded-3xl border border-zinc-800 bg-[#111827] p-8">
+
+                <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-blue-500">
+                  FoundrAI Analysis
+                </p>
+
+                <h2 className="text-4xl font-bold">
+                  {result.startup.startupName}
+                </h2>
+
+                <p className="mt-3 text-zinc-400">
+                  Here is the initial analysis generated from
+                  your startup information.
+                </p>
+
+              </div>
+
+              {/* Classification */}
+
+              <div className="rounded-3xl border border-zinc-800 bg-[#111827] p-8">
+
+                <p className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
+                  Startup Classification
+                </p>
+
+                <div className="mt-4 flex items-center justify-between">
+
+                  <h3 className="text-2xl font-bold">
+                    Business Type
+                  </h3>
+
+                  <span className="rounded-full bg-blue-500/10 px-5 py-2 text-lg font-bold text-blue-400">
+                    {result.classification}
+                  </span>
+
+                </div>
+
+              </div>
+
+              {/* Knowledge */}
+
+              <div className="rounded-3xl border border-zinc-800 bg-[#111827] p-8">
+
+                <div className="mb-6">
+                  <p className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
+                    Knowledge Base Insights
+                  </p>
+
+                  <h3 className="mt-2 text-2xl font-bold">
+                    Relevant Market & Competitor Information
+                  </h3>
+                </div>
+
+                <div className="space-y-4">
+
+                  {result.retrieved_knowledge.map(
+                    (item, index) => (
+                      <div
+                        key={index}
+                        className="rounded-2xl border border-zinc-800 bg-[#0A0A0A] p-5"
+                      >
+
+                        <div className="flex items-center justify-between">
+
+                          <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-400">
+                            {item.type}
+                          </span>
+
+                          <span className="text-sm text-zinc-500">
+                            Similarity:{" "}
+                            {item.similarity.toFixed(2)}
+                          </span>
+
+                        </div>
+
+                        <p className="mt-4 leading-7 text-zinc-300">
+                          {item.text}
+                        </p>
+
+                      </div>
+                    )
+                  )}
+
+                </div>
+
+              </div>
+
+              {/* Startup Summary */}
+
+              <div className="rounded-3xl border border-zinc-800 bg-[#111827] p-8">
+
+                <p className="text-sm font-semibold uppercase tracking-widest text-zinc-500">
+                  Startup Summary
+                </p>
+
+                <div className="mt-6 grid gap-4 md:grid-cols-2">
+
+                  <div className="rounded-xl bg-[#0A0A0A] p-4">
+                    <p className="text-sm text-zinc-500">
+                      Industry
+                    </p>
+                    <p className="mt-1 font-semibold">
+                      {result.startup.industry}
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl bg-[#0A0A0A] p-4">
+                    <p className="text-sm text-zinc-500">
+                      Target Customer
+                    </p>
+                    <p className="mt-1 font-semibold">
+                      {result.startup.targetCustomer}
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl bg-[#0A0A0A] p-4">
+                    <p className="text-sm text-zinc-500">
+                      Location
+                    </p>
+                    <p className="mt-1 font-semibold">
+                      {result.startup.location}
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl bg-[#0A0A0A] p-4">
+                    <p className="text-sm text-zinc-500">
+                      Business Model
+                    </p>
+                    <p className="mt-1 font-semibold">
+                      {result.startup.businessModel}
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </section>
+          )}
+
+        </div>
       </main>
     </>
   );
