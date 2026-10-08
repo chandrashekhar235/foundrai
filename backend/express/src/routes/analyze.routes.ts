@@ -41,10 +41,26 @@ router.post("/", (req, res) => {
 
     console.log("Python script:", pythonScript);
 
-    const pythonProcess = spawn(
-        pythonPath,
-        [pythonScript]
-    );
+    // Spawn Python process with a timeout (60 seconds)
+    const pythonProcess = spawn(pythonPath, [pythonScript]);
+    let timeoutId: NodeJS.Timeout;
+    let timeoutResolved = false;
+
+    // Set timeout
+    const TIMEOUT_MS = 60000;
+    timeoutId = setTimeout(() => {
+        if (!timeoutResolved) {
+            console.log("Python analysis timeout - killing process");
+            pythonProcess.kill("SIGKILL");
+            pythonProcess.removeAllListeners();
+            if (!res.headersSent) {
+                return res.status(500).json({
+                    success: false,
+                    error: "AI analysis timed out after 60 seconds",
+                });
+            }
+        }
+    }, TIMEOUT_MS);
 
     let output = "";
     let errorOutput = "";
@@ -60,58 +76,59 @@ router.post("/", (req, res) => {
     });
 
     // Send startup data to Python
-    pythonProcess.stdin.write(
-        JSON.stringify(startup)
-    );
-
+    pythonProcess.stdin.write(JSON.stringify(startup));
     pythonProcess.stdin.end();
 
     // Python process finished
     pythonProcess.on("close", (code) => {
+        timeoutResolved = true;
+        clearTimeout(timeoutId);
 
-        console.log(
-            "Python process exited with code:",
-            code
-        );
+        console.log("Python process exited with code:", code);
 
         if (code !== 0) {
-
-            console.error(
-                "Python error:",
-                errorOutput
-            );
-
-            return res.status(500).json({
-                success: false,
-                error: "AI analysis failed",
-                details: errorOutput,
-            });
+            console.error("Python error:", errorOutput);
+            if (!res.headersSent) {
+                return res.status(500).json({
+                    success: false,
+                    error: "AI analysis failed",
+                    details: errorOutput,
+                });
+            }
+            return;
         }
 
         try {
-
             const result = JSON.parse(output);
-
-            console.log(
-                "FoundrAI analysis completed"
-            );
-
-            return res.json({
-                success: true,
-                data: result,
-            });
-
+            console.log("FoundrAI analysis completed");
+            if (!res.headersSent) {
+                return res.json({
+                    success: true,
+                    data: result,
+                });
+            }
         } catch (error) {
+            console.error("Could not parse Python response:", output);
+            if (!res.headersSent) {
+                return res.status(500).json({
+                    success: false,
+                    error: "Invalid response from AI",
+                    raw: output,
+                });
+            }
+        }
+    });
 
-            console.error(
-                "Could not parse Python response:",
-                output
-            );
-
+    // Handle process errors
+    pythonProcess.on("error", (error) => {
+        timeoutResolved = true;
+        clearTimeout(timeoutId);
+        console.error("Python process error:", error);
+        if (!res.headersSent) {
             return res.status(500).json({
                 success: false,
-                error: "Invalid response from AI",
-                raw: output,
+                error: "Failed to start AI analysis",
+                details: error.message,
             });
         }
     });

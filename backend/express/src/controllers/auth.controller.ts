@@ -3,7 +3,7 @@ import { OAuth2Client } from "google-auth-library";
 import prisma from "../config/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const client = new OAuth2Client();
 export const signup = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
@@ -72,14 +72,18 @@ export const signup = async (req: Request, res: Response) => {
       },
     });
 
-  } catch (error) {
-    console.error("Signup Error:", error);
+  } catch (error: any) {
+  console.error("========== SIGNUP ERROR ==========");
+  console.error(error);
+  console.error("MESSAGE:", error.message);
+  console.error("STACK:", error.stack);
 
-    return res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-    });
-  }
+  return res.status(500).json({
+    success: false,
+    message: "Internal Server Error",
+    error: error.message,
+  });
+}
 };
 export const login = async (req: Request, res: Response) => {
   try {
@@ -160,9 +164,19 @@ export const login = async (req: Request, res: Response) => {
     });
   }
 };
-export const googleLogin = async (req: Request, res: Response) => {
+export const googleLogin = async (
+  req: Request,
+  res: Response
+) => {
   try {
     const { credential } = req.body;
+
+    console.log("========== GOOGLE LOGIN ==========");
+    console.log("Credential received:", !!credential);
+    console.log(
+      "Backend Google Client ID:",
+      process.env.GOOGLE_CLIENT_ID
+    );
 
     if (!credential) {
       return res.status(400).json({
@@ -177,8 +191,9 @@ export const googleLogin = async (req: Request, res: Response) => {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
-    // Extract user information
     const payload = ticket.getPayload();
+
+    console.log("Google payload:", payload);
 
     if (!payload) {
       return res.status(400).json({
@@ -187,19 +202,37 @@ export const googleLogin = async (req: Request, res: Response) => {
       });
     }
 
-    const email = payload.email!;
-    const name = payload.name!;
+    const email = payload.email;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Google account email not found",
+      });
+    }
+
+    const name = payload.name || "Google User";
     const avatar = payload.picture || "";
 
-    // Check if the user already exists
+    console.log("Google user:", {
+      email,
+      name,
+      avatar,
+    });
+
+    // Find existing user
     let user = await prisma.user.findUnique({
       where: {
         email,
       },
     });
 
-    // Create a new user if they don't exist
+    console.log("Existing user:", user);
+
+    // Create user if they don't exist
     if (!user) {
+      console.log("Creating Google user...");
+
       user = await prisma.user.create({
         data: {
           name,
@@ -207,6 +240,8 @@ export const googleLogin = async (req: Request, res: Response) => {
           avatar,
         },
       });
+
+      console.log("Google user created:", user);
     }
 
     // Generate FoundrAI JWT
@@ -221,6 +256,8 @@ export const googleLogin = async (req: Request, res: Response) => {
       }
     );
 
+    console.log("JWT generated successfully");
+
     return res.status(200).json({
       success: true,
       message: "Google Login Successful",
@@ -233,12 +270,17 @@ export const googleLogin = async (req: Request, res: Response) => {
       },
     });
 
-  } catch (error) {
-    console.error("Google Login Error:", error);
+  } catch (error: any) {
+    console.error("========== GOOGLE LOGIN ERROR ==========");
+    console.error(error);
+    console.error("Message:", error?.message);
+    console.error("Name:", error?.name);
+    console.error("Stack:", error?.stack);
 
     return res.status(500).json({
       success: false,
       message: "Google Authentication Failed",
+      error: error?.message,
     });
   }
 };
