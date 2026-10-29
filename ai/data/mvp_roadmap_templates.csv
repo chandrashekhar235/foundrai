@@ -1,0 +1,8 @@
+phase,action,success_signal,data_origin
+Discovery,Interview target users,Recurring pain points identified,generic_planning_template
+Validation,Test a landing page,Qualified sign-ups or demo requests,generic_planning_template
+MVP,Build one core workflow,Users complete the core task,generic_planning_template
+Pilot,Run a limited pilot,Activation and repeat usage,generic_planning_template
+Pricing,Test pricing hypotheses,Evidence of willingness to pay,generic_planning_template
+Launch,Publish onboarding and support,Track acquisition and retention,generic_planning_template
+Iteration,Prioritize observed user issues,Measured improvement,generic_planning_template

@@ -1,0 +1,1 @@
+FoundrAI generated starter data. Synthetic examples are not real companies or verified market research. Do not present them as factual evidence. Classifier labels are synthetic and cannot establish real-world accuracy. Forecast values are assumptions and must be replaced with validated inputs.

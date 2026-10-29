@@ -1,0 +1,11 @@
+industry,market_type,description,target_customers,common_problems,common_business_models
+SaaS,B2B,"Software products that help businesses automate workflows and improve productivity","Startups,SMEs,Enterprises","High competition,customer acquisition,retention","Subscription,Per-user pricing"
+SaaS,B2C,"Software products directly serving individual consumers","Students,Professionals,Consumers","User acquisition,retention,pricing","Subscription,Freemium"
+EdTech,B2C,"Technology products designed to improve learning and education","Students,Teachers,Learners","Engagement,content quality,user retention","Subscription,Freemium"
+EdTech,B2B,"Education technology sold to institutions","Schools,Colleges,Universities","Institutional adoption,long sales cycles","Subscription,Licensing"
+FinTech,B2C,"Financial technology products serving individual users","Consumers,Students,Professionals","Trust,security,regulation,user acquisition","Transaction fees,Subscription"
+FinTech,B2B,"Financial technology products serving businesses","SMEs,Enterprises,Financial institutions","Compliance,security,integration","Subscription,Transaction fees"
+HealthTech,B2C,"Technology products helping individuals manage health and wellness","Patients,Consumers","Trust,privacy,regulation","Subscription,Freemium"
+HealthTech,B2B,"Technology products serving healthcare organizations","Hospitals,Clinics,Healthcare providers","Integration,regulation,long sales cycles","Subscription,Licensing"
+E-commerce,B2C,"Online platforms selling products directly to consumers","Online shoppers","Customer acquisition,logistics,competition","Commission,Product margin"
+E-commerce,B2B,"Commerce infrastructure serving businesses","Retailers,Brands,SMEs","Integration,competition,logistics","Subscription,Transaction fees"

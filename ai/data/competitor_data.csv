@@ -1,0 +1,8 @@
+industry,category,competitor_type,description,common_strength,common_weakness
+EdTech,Coding Education,"Online learning platform","Provides programming courses and learning resources","Large content library","High competition"
+EdTech,Interview Preparation,"Technical interview platform","Helps students prepare for technical interviews","Large problem database","Crowded market"
+SaaS,Project Management,"Project management software","Helps teams organize projects and tasks","Collaboration features","Many established competitors"
+SaaS,AI Productivity,"AI productivity software","Uses AI to automate repetitive work","Automation","Rapidly changing market"
+FinTech,Personal Finance,"Personal finance application","Helps users track and manage finances","Financial insights","Trust and security requirements"
+HealthTech,Wellness,"Digital wellness platform","Provides digital health and wellness services","Convenience","Privacy and regulatory requirements"
+E-commerce,Marketplace,"Online marketplace","Connects buyers and sellers","Large product selection","Competition and logistics"

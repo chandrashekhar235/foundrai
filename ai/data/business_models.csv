@@ -1,0 +1,6 @@
+business_model,description,common_industries,advantages,challenges
+Subscription,"Customers pay a recurring fee for continued access","SaaS,EdTech,HealthTech","Predictable recurring revenue","Customer churn"
+Freemium,"Basic functionality is free while advanced functionality is paid","SaaS,EdTech,Consumer apps","Large user acquisition potential","Low conversion from free to paid"
+Commission,"Platform takes a percentage of every transaction","E-commerce,FinTech,Marketplaces","Revenue grows with transaction volume","Requires significant transaction volume"
+Licensing,"Customers pay for the right to use software or intellectual property","SaaS,HealthTech,Enterprise software","Potentially high-value contracts","Long sales cycles"
+Per-user pricing,"Businesses pay based on number of users","SaaS,B2B software","Revenue scales with customer usage","Pricing can become expensive for customers"

@@ -1,0 +1,9 @@
+business_model,description,common_industries,advantages,challenges,data_origin
+B2B SaaS subscription,Recurring software access for organizations,"SaaS, HRTech, RetailTech",Predictable recurring revenue,Churn and onboarding effort,illustrative_reference
+B2C freemium subscription,Free tier with paid upgrades,"EdTech, HealthTech, FinTech",Low-friction adoption,Conversion uncertainty,illustrative_reference
+Usage-based pricing,Charge based on measured usage,"SaaS, FinTech, LogisticsTech",Pricing can align with usage,Revenue can fluctuate,illustrative_reference
+Transaction fee marketplace,Take a fee on completed transactions,"AgriTech, FoodTech, PropTech",Can scale with transactions,Requires marketplace liquidity,illustrative_reference
+Enterprise annual license,Annual contracts for organizations,"HealthTech, HRTech, Cybersecurity",Larger contract values,Long procurement cycles,illustrative_reference
+Service plus software,Software with implementation services,"AgriTech, ClimateTech, HealthTech",High-touch customer support,Services may limit scalability,illustrative_reference
+Commission-based platform,Commission on completed sales,"RetailTech, FoodTech, PropTech",Aligned with transactions,Disintermediation risk,illustrative_reference
+One-time purchase with support,Upfront purchase plus maintenance,"ClimateTech, AgriTech",Simple purchasing model,Less recurring revenue,illustrative_reference

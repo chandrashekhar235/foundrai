@@ -1,0 +1,7 @@
+strategy,actions,metrics_to_track,data_origin
+Content-led,Publish educational guides,Qualified organic visits,generic_gtm_template
+Partnerships,Work with relevant organizations,Activated referrals,generic_gtm_template
+Founder-led sales,Conduct discovery calls,Meeting-to-pilot conversion,generic_gtm_template
+Community-led,Help relevant communities,Qualified referrals,generic_gtm_template
+Product-led referral,Add a useful sharing workflow,Referred activation,generic_gtm_template
+Paid experiments,Run small controlled ad tests,Cost per qualified lead,generic_gtm_template

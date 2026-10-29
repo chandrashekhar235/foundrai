@@ -1,0 +1,31 @@
+startup_name,industry,target_customer,problem,solution,business_model,market_type
+EduFlow,saas,students,"Students struggle to organize online learning","AI powered learning management platform",subscription,B2C
+TaskPilot,saas,small_businesses,"Small businesses struggle to manage daily tasks","Automated task management platform",subscription,B2B
+TeamSync,saas,remote_teams,"Remote teams struggle with collaboration","Real time team collaboration software",subscription,B2B
+CloudDesk,saas,freelancers,"Freelancers need a simple workspace for projects","Cloud based freelancer workspace",subscription,B2C
+InvoicePro,saas,freelancers,"Freelancers struggle to manage invoices","Automated invoicing platform",subscription,B2B
+HRFlow,saas,startups,"Startups struggle with employee management","Simple HR management platform",subscription,B2B
+LearnHub,saas,students,"Students need personalized learning resources","Personalized learning platform",subscription,B2C
+ProjectPilot,saas,companies,"Companies struggle with project tracking","Project management software",subscription,B2B
+MeetingAI,saas,remote_teams,"Teams waste time taking meeting notes","AI meeting assistant",subscription,B2B
+AnalyticsPro,saas,startups,"Startups need affordable business analytics","Startup analytics dashboard",subscription,B2B
+PayEasy,fintech,small_businesses,"Small businesses struggle with payment tracking","Automated payment management platform",subscription,B2B
+BudgetMate,fintech,young_adults,"Young adults struggle to manage personal finances","Personal budgeting application",subscription,B2C
+InvestSmart,fintech,beginner_investors,"New investors struggle to understand investments","Investment education platform",subscription,B2C
+LoanAssist,fintech,small_businesses,"Small businesses struggle to find suitable loans","Business loan matching platform",commission,B2B
+WealthTrack,fintech,professionals,"Professionals struggle to track investments","Personal wealth management platform",subscription,B2C
+PayLink,fintech,freelancers,"Freelancers need easier international payments","Cross border payment platform",transaction,B2B
+CreditFlow,fintech,startups,"Startups struggle to access business credit","Digital startup credit platform",interest,B2B
+TaxEasy,fintech,freelancers,"Freelancers struggle with tax management","Automated tax management software",subscription,B2C
+InsureTech,fintech,small_businesses,"Small businesses struggle to compare insurance","Digital insurance comparison platform",commission,B2B
+MoneyWise,fintech,students,"Students need help managing limited finances","Student financial planning platform",subscription,B2C
+ShopLocal,ecommerce,local_shoppers,"Customers cannot easily discover local stores","Local marketplace platform",commission,B2C
+FashionHub,ecommerce,fashion_buyers,"Customers struggle to discover independent fashion brands","Online fashion marketplace",commission,B2C
+FreshCart,ecommerce,urban_families,"Families want convenient grocery shopping","Online grocery delivery platform",commission,B2C
+BookMarket,ecommerce,book_lovers,"Readers struggle to find affordable books","Online used book marketplace",commission,B2C
+HomeStore,ecommerce,homeowners,"Homeowners struggle to find home products","Online home products marketplace",commission,B2C
+PetMarket,ecommerce,pet_owners,"Pet owners struggle to find specialized products","Pet product marketplace",commission,B2C
+FoodBox,ecommerce,food_lovers,"Customers want convenient access to specialty foods","Specialty food marketplace",commission,B2C
+SportShop,ecommerce,athletes,"Athletes struggle to find specialized equipment","Sports equipment marketplace",commission,B2C
+LocalCraft,ecommerce,handmade_buyers,"Customers struggle to discover local handmade products","Handmade products marketplace",commission,B2C
+TechMart,ecommerce,technology_buyers,"Customers struggle to compare technology products","Technology marketplace",commission,B2C

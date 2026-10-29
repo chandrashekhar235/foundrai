@@ -1,0 +1,25 @@
+industry,stage,monthly_customers_assumption,average_monthly_revenue_per_customer_inr_assumption,monthly_fixed_cost_inr_assumption,monthly_variable_cost_per_customer_inr_assumption,monthly_revenue_formula,monthly_cost_formula,warning
+AgriTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+AgriTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+EdTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+EdTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+HealthTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+HealthTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+FinTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+FinTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+ClimateTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+ClimateTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+RetailTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+RetailTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+HRTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+HRTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+LogisticsTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+LogisticsTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+SaaS,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+SaaS,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+FoodTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+FoodTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+Cybersecurity,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+Cybersecurity,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+PropTech,MVP,50,500,75000,100,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.
+PropTech,Early traction,250,1200,180000,250,customers * average_monthly_revenue,fixed_cost + customers * variable_cost,Illustrative only; replace with validated assumptions.

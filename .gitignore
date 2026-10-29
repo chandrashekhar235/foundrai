@@ -1,0 +1,32 @@
+cd ~/Documents/foundrAi
+
+cat > .gitignore <<'EOF'
+# Environment variables and secrets
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Python environments and caches
+.venv/
+**/.venv/
+venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+**/.pytest_cache/
+
+# Node.js
+node_modules/
+**/node_modules/
+
+# Build output
+frontend/.next/
+backend/express/dist/
+
+# macOS
+.DS_Store
+**/.DS_Store
+EOF
