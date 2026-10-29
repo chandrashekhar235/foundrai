@@ -22,9 +22,7 @@ router.post("/", (req, res) => {
      * Your virtual environment is:
      * foundrAi/.venv/
      */
-    const pythonPath =
-        "/Users/sahil/Documents/foundrAi/.venv/bin/python";
-
+   const pythonPath = process.env.PYTHON_PATH || "python3";
     /*
      * __dirname points to:
      *
