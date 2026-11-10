@@ -11,7 +11,7 @@ export default function Mission() {
           </p>
 
           <h2 className="mt-4 text-5xl font-bold">
-            Helping Every Founder Build Faster
+            Helping Every Founder Build Fast
           </h2>
 
         </div>
