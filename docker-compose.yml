@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: foundrai-backend
+    env_file:
+      - ./backend/express/.env.docker
+    environment:
+      PORT: "10000"
+      PYTHON_PATH: python
+    ports:
+      - "5001:10000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: foundrai-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+

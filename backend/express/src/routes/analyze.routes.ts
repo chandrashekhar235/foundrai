@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
      * Your virtual environment is:
      * foundrAi/.venv/
      */
-   const pythonPath = process.env.PYTHON_PATH || "python3";
+   const pythonPath = "/Users/sahil/Documents/foundrAi/.venv/bin/python";
     /*
      * __dirname points to:
      *
@@ -40,7 +40,13 @@ router.post("/", (req, res) => {
     console.log("Python script:", pythonScript);
 
     // Spawn Python process with a timeout (60 seconds)
-    const pythonProcess = spawn(pythonPath, [pythonScript]);
+    const pythonProcess = spawn(pythonPath, [pythonScript], {
+    cwd: path.resolve(__dirname, "../../../../"),
+    env: {
+        ...process.env,
+        PYTHONUNBUFFERED: "1",
+    },
+});
     let timeoutId: NodeJS.Timeout;
     let timeoutResolved = false;
 
@@ -70,8 +76,12 @@ router.post("/", (req, res) => {
 
     // Receive errors/warnings from Python
     pythonProcess.stderr.on("data", (data) => {
-        errorOutput += data.toString();
-    });
+    const message = data.toString();
+
+    errorOutput += message;
+
+    console.log("[PYTHON]", message.trimEnd());
+});
 
     // Send startup data to Python
     pythonProcess.stdin.write(JSON.stringify(startup));

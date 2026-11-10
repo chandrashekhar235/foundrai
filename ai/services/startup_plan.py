@@ -1,36 +1,33 @@
+
 def generate_startup_plan(startup, classification, retrieved_knowledge):
 
     plan = {
-        "startup_name": startup["startupName"],
+        "startup_name": startup.get("startupName") or startup.get("idea", "Unnamed Startup"),
         "classification": classification,
 
         "market": {
-            "industry": startup["industry"],
+            "industry": startup.get("industry", ""),
             "location": startup.get("location", ""),
             "target_customer": startup.get("targetCustomer", ""),
         },
 
-        "problem": startup["problem"],
-
-        "solution": startup["solution"],
-
-        "business_model": startup["businessModel"],
+        "problem": startup.get("problem", ""),
+        "solution": startup.get("solution", ""),
+        "business_model": startup.get("businessModel", ""),
 
         "knowledge_insights": [],
-
         "recommendations": []
     }
 
     # Add information retrieved from our knowledge base
     for item in retrieved_knowledge:
-
         plan["knowledge_insights"].append({
             "type": item.get("type"),
             "information": item.get("text"),
             "similarity": item.get("similarity")
         })
 
-    # Base recommendations (validated problem, MVP, etc.)
+    # Base recommendations
     base_recs = [
         {
             "title": "Validate the problem first",
@@ -62,7 +59,7 @@ def generate_startup_plan(startup, classification, retrieved_knowledge):
         }
     ]
 
-    # Classification-specific phase recommendations
+    # Classification-specific recommendations
     classification_phases = {
         "B2B": [
             {
@@ -98,7 +95,7 @@ def generate_startup_plan(startup, classification, retrieved_knowledge):
         ]
     }
 
-    # Business-model-specific phase recommendations
+    # Business-model-specific recommendations
     model_phases = {
         "Subscription": [
             {
@@ -166,24 +163,30 @@ def generate_startup_plan(startup, classification, retrieved_knowledge):
         ]
     }
 
-    # Merge base recommendations
-    plan["recommendations"] = base_recs
+    # Merge recommendations
+    plan["recommendations"] = base_recs.copy()
 
-    # Add classification-specific phases
     if classification in classification_phases:
-        plan["recommendations"].extend(classification_phases[classification])
+        plan["recommendations"].extend(
+            classification_phases[classification]
+        )
 
-    # Add business-model-specific phases
-    if startup.get("businessModel") in model_phases:
-        plan["recommendations"].extend(model_phases[startup["businessModel"]])
+    business_model = startup.get("businessModel", "")
 
-    # Deduplicate recommendations by title (keep first occurrence)
+    if business_model in model_phases:
+        plan["recommendations"].extend(
+            model_phases[business_model]
+        )
+
+    # Remove duplicate recommendations by title
     seen = set()
     deduped = []
+
     for rec in plan["recommendations"]:
         if rec["title"] not in seen:
             seen.add(rec["title"])
             deduped.append(rec)
+
     plan["recommendations"] = deduped
 
     return plan

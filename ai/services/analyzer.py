@@ -8,10 +8,13 @@ try:
     from .knowledge_base import KnowledgeBase
     from .retriever import KnowledgeRetriever
     from .startup_plan import generate_startup_plan
+    from .financial_forecast import FinancialForecast
+
 except ImportError:
     from services.knowledge_base import KnowledgeBase
     from services.retriever import KnowledgeRetriever
     from services.startup_plan import generate_startup_plan
+    from services.financial_forecast import FinancialForecast
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +22,9 @@ MODEL_PATH = BASE_DIR / "models" / "startup_classifier.pkl"
 
 
 class StartupAnalyzer:
+
     def __init__(self):
+
         # Load the trained ML model.
         if not MODEL_PATH.exists():
             raise FileNotFoundError(
@@ -32,6 +37,9 @@ class StartupAnalyzer:
         self.knowledge_base = KnowledgeBase()
         self.retriever = KnowledgeRetriever()
 
+        # Initialize financial forecasting service.
+        self.financial_forecast = FinancialForecast()
+
     # --------------------------------------------------
     # Classification
     # --------------------------------------------------
@@ -40,10 +48,14 @@ class StartupAnalyzer:
         self,
         text: str,
     ) -> tuple[Optional[str], Optional[float], Optional[str]]:
+
         """Return classification, confidence, and confidence label."""
+
         try:
             if hasattr(self.model, "predict_proba"):
+
                 probas = self.model.predict_proba([text])[0]
+
                 classes = getattr(
                     self.model,
                     "classes_",
@@ -56,10 +68,13 @@ class StartupAnalyzer:
 
                 if confidence >= 0.75:
                     confidence_label = "High"
+
                 elif confidence >= 0.60:
                     confidence_label = "Moderate"
+
                 elif confidence >= 0.45:
                     confidence_label = "Low"
+
                 else:
                     confidence_label = "Low (caution)"
 
@@ -70,12 +85,15 @@ class StartupAnalyzer:
                 )
 
             classification = str(self.model.predict([text])[0])
+
             return classification, None, None
 
         except Exception:
+
             try:
                 classification = str(self.model.predict([text])[0])
                 return classification, None, None
+
             except Exception:
                 return None, None, None
 
@@ -83,7 +101,11 @@ class StartupAnalyzer:
     # Market and business model analysis
     # --------------------------------------------------
 
-    def _get_market_analysis(self, industry: str) -> Dict[str, Any]:
+    def _get_market_analysis(
+        self,
+        industry: str
+    ) -> Dict[str, Any]:
+
         summary = self.knowledge_base.get_market_summary(industry)
 
         if summary is not None:
@@ -105,6 +127,7 @@ class StartupAnalyzer:
         self,
         industry: str,
     ) -> List[Dict[str, Any]]:
+
         return (
             self.knowledge_base.get_competitor_summary(industry) or []
         )
@@ -113,6 +136,7 @@ class StartupAnalyzer:
         self,
         business_model: str,
     ) -> Optional[Dict[str, Any]]:
+
         return self.knowledge_base.get_business_model_summary(
             business_model
         )
@@ -127,12 +151,14 @@ class StartupAnalyzer:
         competitor_analysis: List,
         business_model_fit: Optional[Dict],
     ) -> List[Dict[str, Any]]:
+
         """Derive potential risks from available knowledge."""
 
         risks: List[Dict[str, Any]] = []
         seen_risks = set()
 
         def add_risk(risk_text: str, source: str):
+
             if not risk_text:
                 return
 
@@ -166,10 +192,12 @@ class StartupAnalyzer:
 
             if any(keyword in risk_lower for keyword in high_keywords):
                 severity = "high"
+
             elif any(
                 keyword in risk_lower for keyword in medium_keywords
             ):
                 severity = "medium"
+
             else:
                 severity = "low"
 
@@ -183,15 +211,23 @@ class StartupAnalyzer:
             add_risk(problem, "market")
 
         for competitor in competitor_analysis:
+
             weakness = competitor.get("common_weakness", "")
+
             if weakness:
                 add_risk(weakness, "competitor")
 
         if business_model_fit:
+
             for challenge in business_model_fit.get("challenges", []):
                 add_risk(challenge, "business_model")
 
-        severity_order = {"high": 0, "medium": 1, "low": 2}
+        severity_order = {
+            "high": 0,
+            "medium": 1,
+            "low": 2
+        }
+
         risks.sort(
             key=lambda risk: severity_order[risk["severity"]]
         )
@@ -210,6 +246,7 @@ class StartupAnalyzer:
         competitor_analysis: List,
         business_model_fit: Optional[Dict],
     ) -> Dict[str, List[str]]:
+
         strengths: List[str] = []
         weaknesses: List[str] = []
 
@@ -232,26 +269,32 @@ class StartupAnalyzer:
         ]
 
         if not any("competition" in risk for risk in risk_texts):
+
             strengths.append(
                 "No competition-related risk was identified "
                 "in the available knowledge."
             )
 
         if "subscription" in business_model:
+
             strengths.append(
                 "Subscription pricing may support recurring revenue."
             )
+
         elif "freemium" in business_model:
+
             strengths.append(
                 "A freemium model may reduce barriers to initial adoption."
             )
 
         if problem and solution:
+
             strengths.append(
                 "The startup describes both a problem and a proposed solution."
             )
 
         if any("competition" in risk for risk in risk_texts):
+
             weaknesses.append(
                 "Competition-related risks may require stronger differentiation."
             )
@@ -261,6 +304,7 @@ class StartupAnalyzer:
             for risk in risk_texts
             for keyword in ("regulation", "compliance", "security")
         ):
+
             weaknesses.append(
                 "Potential regulatory, compliance, or security "
                 "challenges require further assessment."
@@ -269,6 +313,7 @@ class StartupAnalyzer:
         if classification == "B2B" and any(
             "sales cycles" in risk for risk in risk_texts
         ):
+
             weaknesses.append(
                 "B2B sales may involve longer decision cycles."
             )
@@ -277,6 +322,7 @@ class StartupAnalyzer:
             "customer acquisition" in risk
             for risk in risk_texts
         ):
+
             weaknesses.append(
                 "Customer acquisition may require additional validation."
             )
@@ -295,6 +341,7 @@ class StartupAnalyzer:
         startup: Dict,
         classification: Optional[str],
     ) -> Dict[str, Any]:
+
         """
         Return planning resources.
 
@@ -328,19 +375,25 @@ class StartupAnalyzer:
             "mvp_roadmap_templates": mvp_roadmaps,
             "launch_strategy_templates": launch_strategies,
             "financial_assumptions": financial_assumptions,
+
             "data_notes": {
+
                 "customer_personas": (
                     "Synthetic hypotheses; validate through customer interviews."
                 ),
+
                 "mvp_roadmaps": (
                     "Generic planning templates; adapt to the startup."
                 ),
+
                 "launch_strategies": (
                     "Generic launch templates; test channels before scaling."
                 ),
+
                 "financial_assumptions": (
                     "Illustrative assumptions, not verified forecasts."
                 ),
+
                 "classification": (
                     "ML prediction; validate against the actual target market."
                     if classification
@@ -353,8 +406,11 @@ class StartupAnalyzer:
     # Main analysis pipeline
     # --------------------------------------------------
 
-   
-    def analyze(self, startup: Dict[str, Any]) -> Dict[str, Any]:
+    def analyze(
+        self,
+        startup: Dict[str, Any]
+    ) -> Dict[str, Any]:
+
         """Generate a structured startup analysis report."""
 
         # Preserve every non-empty field submitted by the founder.
@@ -365,6 +421,7 @@ class StartupAnalyzer:
         }
 
         if not startup_context:
+
             raise ValueError(
                 "Please provide at least a startup idea or other details."
             )
@@ -386,11 +443,16 @@ class StartupAnalyzer:
         )
 
         if classification_text:
+
             classification, confidence, confidence_label = (
                 self._get_classification_confidence(classification_text)
             )
+
         else:
-            classification, confidence, confidence_label = None, None, None
+
+            classification, confidence, confidence_label = (
+                None, None, None
+            )
 
         # Use labeled context for knowledge retrieval.
         retrieval_text = "\n".join(
@@ -406,18 +468,28 @@ class StartupAnalyzer:
         )
 
         industry = str(startup.get("industry") or "").strip()
-        business_model = str(startup.get("businessModel") or "").strip()
 
+        business_model = str(
+            startup.get("businessModel") or ""
+        ).strip()
+
+        # Market analysis.
         market_analysis = self._get_market_analysis(industry)
-        competitor_analysis = self._get_competitor_analysis(industry)
-        business_model_fit = self._get_business_model_fit(business_model)
 
+        competitor_analysis = self._get_competitor_analysis(industry)
+
+        business_model_fit = self._get_business_model_fit(
+            business_model
+        )
+
+        # Risk assessment.
         risk_assessment = self._analyze_risks(
             market_analysis,
             competitor_analysis,
             business_model_fit,
         )
 
+        # Strengths and weaknesses.
         strengths_weaknesses = self._analyze_strengths_weaknesses(
             startup,
             classification or "",
@@ -426,6 +498,7 @@ class StartupAnalyzer:
             business_model_fit,
         )
 
+        # Startup planning.
         startup_plan = generate_startup_plan(
             startup,
             classification or "Unknown",
@@ -434,16 +507,24 @@ class StartupAnalyzer:
 
         recommendations = startup_plan.get("recommendations", [])
 
+        # Knowledge insights.
         knowledge_insights = self.retriever.build_insights(
             retrieved_knowledge,
             limit=5,
         )
 
+        # Dataset-based planning insights.
         planning_insights = self._get_planning_insights(
             startup,
             classification,
         )
 
+        # Deterministic financial forecasting.
+        financial_forecast = self.financial_forecast.compare_stages(
+            industry
+        )
+
+        # Model information.
         model_classes = getattr(
             self.model,
             "classes_",
@@ -452,6 +533,7 @@ class StartupAnalyzer:
 
         if hasattr(model_classes, "tolist"):
             model_classes = model_classes.tolist()
+
         else:
             model_classes = list(model_classes)
 
@@ -460,23 +542,35 @@ class StartupAnalyzer:
             "classes": model_classes,
         }
 
+        # Final structured analysis response.
         return {
             "startup": startup,
             "startup_context": startup_context,
+
             "classification": classification,
             "classification_confidence": confidence,
             "classification_confidence_label": confidence_label,
+
             "market_analysis": market_analysis,
             "competitor_analysis": competitor_analysis,
             "business_model_fit": business_model_fit,
+
             "risk_assessment": risk_assessment,
+
             "strengths": strengths_weaknesses["strengths"],
             "weaknesses": strengths_weaknesses["weaknesses"],
+
             "recommendations": recommendations,
+
             "knowledge_insights": knowledge_insights,
             "retrieved_knowledge": retrieved_knowledge,
+
             "planning_insights": planning_insights,
+
+            "financial_forecast": financial_forecast,
+
             "model_info": model_info,
+
             "analysis_scope": {
                 "market_data_source": "knowledge_base",
                 "market_data_is_live": False,

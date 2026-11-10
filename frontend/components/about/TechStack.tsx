@@ -2,7 +2,7 @@ const stack = [
   "Next.js",
   "Express",
   "TypeScript",
-  "MongoDB",
+  "PostgreSQL",
   "TailwindCSS",
   "JWT",
   "Google OAuth",

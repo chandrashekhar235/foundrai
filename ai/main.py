@@ -6,27 +6,33 @@ from services.analyzer import StartupAnalyzer
 
 def main():
     try:
-        # Read JSON sent from Express
-        input_data = sys.stdin.read()
+        print("STEP 1: Reading startup input", file=sys.stderr, flush=True)
 
+        input_data = sys.stdin.read()
         startup = json.loads(input_data)
 
-        # Create analyzer
+        print("STEP 2: Initializing StartupAnalyzer", file=sys.stderr, flush=True)
+
         analyzer = StartupAnalyzer()
 
-        # Run AI analysis
+        print("STEP 3: StartupAnalyzer initialized", file=sys.stderr, flush=True)
+
         result = analyzer.analyze(startup)
 
-        # Send JSON back to Express
+        print("STEP 4: Analysis completed", file=sys.stderr, flush=True)
+
         print(json.dumps(result, default=str))
 
     except Exception as e:
+        print(f"PYTHON ERROR: {e}", file=sys.stderr, flush=True)
+
         print(
             json.dumps({
                 "success": False,
                 "error": str(e)
             })
         )
+
         sys.exit(1)
 
 

@@ -6,6 +6,16 @@ import {
   type FormEvent,
   type ReactNode,
 } from "react";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 import Navbar from "@/components/layout/Navbar";
 
 type StartupData = {
@@ -43,6 +53,22 @@ type RiskItem = {
   severity?: string;
   source?: string;
 };
+type FinancialScenario = {
+  stage: string;
+  monthly_revenue: number;
+  monthly_fixed_cost: number;
+  monthly_variable_cost: number;
+  monthly_total_cost: number;
+  monthly_profit: number;
+  break_even_customers: number;
+};
+
+type FinancialForecast = {
+  industry: string;
+  currency: string;
+  scenarios: FinancialScenario[];
+  data_note?: string;
+};
 
 type AnalysisResult = {
   startup?: StartupData;
@@ -59,6 +85,7 @@ type AnalysisResult = {
   recommendations?: Recommendation[];
   knowledge_insights?: KnowledgeItem[];
   retrieved_knowledge?: KnowledgeItem[];
+  financial_forecast?: FinancialForecast;
   planning_insights?: {
     customer_personas?: GenericRecord[];
     mvp_roadmap_templates?: GenericRecord[];
@@ -215,6 +242,181 @@ function RecordCards({
         );
       })}
     </div>
+  );
+}
+
+function FinancialCharts({
+  forecast,
+}: {
+  forecast?: FinancialForecast;
+}) {
+  const scenarios = forecast?.scenarios ?? [];
+
+  const formatINR = (value: number) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(value);
+
+  if (!scenarios.length) {
+    return (
+      <p className="rounded-xl border border-dashed border-zinc-700 p-4 text-sm text-zinc-400">
+        Financial forecast data is not available for this analysis.
+      </p>
+    );
+  }
+
+  const chartData = scenarios.map((scenario) => ({
+    stage: scenario.stage,
+    Revenue: scenario.monthly_revenue,
+    Costs: scenario.monthly_total_cost,
+    Profit: scenario.monthly_profit,
+  }));
+
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-2">
+        {scenarios.map((scenario) => (
+          <div
+            key={scenario.stage}
+            className="rounded-2xl border border-zinc-800 bg-[#0A0A0A] p-5"
+          >
+            <p className="text-sm text-zinc-400">{scenario.stage}</p>
+
+            <p className="mt-2 text-2xl font-bold text-white">
+              {formatINR(scenario.monthly_profit)}
+            </p>
+
+            <p className="mt-1 text-xs text-zinc-500">
+              Estimated monthly profit / loss
+            </p>
+
+            <div className="mt-4 border-t border-zinc-800 pt-4">
+              <p className="text-sm text-zinc-300">
+                Break-even:{" "}
+                <span className="font-semibold text-white">
+                  {scenario.break_even_customers} customers
+                </span>
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="rounded-2xl border border-zinc-800 bg-[#0A0A0A] p-5">
+        <h4 className="mb-1 font-semibold text-white">
+          Monthly Financial Comparison
+        </h4>
+        <p className="mb-5 text-xs text-zinc-500">
+          Revenue, total costs, and profit/loss in INR
+        </p>
+
+        <div className="h-80 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={chartData}
+              margin={{ top: 10, right: 10, left: 10, bottom: 5 }}
+            >
+              <CartesianGrid
+                stroke="#27272a"
+                strokeDasharray="3 3"
+                vertical={false}
+              />
+              <XAxis
+                dataKey="stage"
+                stroke="#a1a1aa"
+                tick={{ fill: "#a1a1aa", fontSize: 12 }}
+              />
+              <YAxis
+                stroke="#a1a1aa"
+                tick={{ fill: "#a1a1aa", fontSize: 11 }}
+                tickFormatter={(value) => `₹${Number(value) / 1000}k`}
+              />
+              <Tooltip
+                formatter={(value) => formatINR(Number(value))}
+                contentStyle={{
+                  backgroundColor: "#111827",
+                  border: "1px solid #3f3f46",
+                  borderRadius: "12px",
+                  color: "#fff",
+                }}
+              />
+              <Legend />
+              <Bar
+                dataKey="Revenue"
+                fill="#3b82f6"
+                radius={[5, 5, 0, 0]}
+              />
+              <Bar
+                dataKey="Costs"
+                fill="#f59e0b"
+                radius={[5, 5, 0, 0]}
+              />
+              <Bar
+                dataKey="Profit"
+                fill="#10b981"
+                radius={[5, 5, 0, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <p className="text-xs leading-5 text-zinc-500">
+        {forecast?.data_note ??
+          "These figures are illustrative assumptions, not validated financial projections."}
+      </p>
+    </div>
+  );
+}
+
+function MvpRoadmap({ records }: { records?: GenericRecord[] }) {
+  if (!records?.length) {
+    return (
+      <p className="rounded-xl border border-dashed border-zinc-700 p-4 text-sm text-zinc-400">
+        No MVP roadmap templates were returned. Check whether
+        mvp_roadmap_templates.csv exists, contains data, and is loaded by the AI service.
+      </p>
+    );
+  }
+
+  return (
+    <ol className="relative ml-3 space-y-5 border-l border-blue-500/40 pl-7">
+      {records.map((record, index) => {
+        const phase = record.phase ?? record.stage ?? `Phase ${index + 1}`;
+        const action = record.action ?? record.description;
+        const successSignal = record.success_signal ?? record.successSignal;
+
+        return (
+          <li key={`${String(phase)}-${index}`} className="relative">
+            <span className="absolute -left-[2.15rem] top-5 flex h-6 w-6 items-center justify-center rounded-full border-2 border-blue-400 bg-[#111827] text-xs font-bold text-blue-300">
+              {index + 1}
+            </span>
+            <article className="rounded-2xl border border-zinc-800 bg-[#0A0A0A] p-5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-blue-300">
+                {formatValue(phase)}
+              </p>
+              {action !== undefined && (
+                <p className="mt-2 leading-6 text-zinc-200">
+                  {formatValue(action)}
+                </p>
+              )}
+              {successSignal !== undefined && (
+                <div className="mt-4 rounded-xl bg-emerald-500/5 p-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-emerald-300">
+                    Success signal
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-zinc-300">
+                    {formatValue(successSignal)}
+                  </p>
+                </div>
+              )}
+            </article>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -883,10 +1085,7 @@ export default function AnalyzePage() {
                   your actual startup and validate the priorities.
                 </p>
 
-                <RecordCards
-                  records={planning?.mvp_roadmap_templates}
-                  emptyText="No MVP roadmap templates were returned. Check whether mvp_roadmap_templates.csv exists, contains data, and is loaded by the AI service."
-                />
+                <MvpRoadmap records={planning?.mvp_roadmap_templates} />
               </Panel>
 
               {/* Customer personas */}
@@ -931,6 +1130,8 @@ export default function AnalyzePage() {
                 title="Financial Assumptions"
                 eyebrow="Illustrative only"
               >
+                <FinancialCharts forecast={result.financial_forecast} />
+
                 <RecordCards
                   records={planning?.financial_assumptions}
                   emptyText="No financial assumptions were returned for this industry. Missing data does not mean zero costs or zero revenue."

@@ -1,8 +1,13 @@
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* =========================================
+   THEME CONFIGURATION
+========================================= */
 
 @theme inline {
   --color-background: var(--background);
@@ -47,6 +52,10 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 }
+
+/* =========================================
+   ROOT VARIABLES
+========================================= */
 
 :root {
   --background: oklch(1 0 0);
@@ -117,19 +126,29 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* =========================================
+   BASE STYLES
+========================================= */
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
 }
-@keyframes fadeIn {
 
+/* =========================================
+   GENERAL ANIMATIONS
+========================================= */
+
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(-8px);
@@ -139,11 +158,448 @@
     opacity: 1;
     transform: translateY(0);
   }
-
 }
 
 .animate-fade-in {
-
   animation: fadeIn 0.35s ease;
+}
 
+/* =========================================
+   HORIZONTAL WORKFLOW
+========================================= */
+
+.workflow-mask {
+  overflow: hidden;
+  width: 100%;
+}
+
+.workflow-track {
+  width: max-content;
+  animation: workflow-scroll 65s linear infinite;
+  will-change: transform;
+}
+
+.workflow-mask:hover .workflow-track {
+  animation-play-state: paused;
+}
+
+@keyframes workflow-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Moving connector light */
+
+.workflow-pulse {
+  animation: connector-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes connector-pulse {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.hero-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #080808;
+}
+
+/* Ambient glow */
+
+.hero-glow {
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  filter: blur(120px);
+  background: rgba(37, 99, 235, 0.16);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero-glow-one {
+  top: -280px;
+  left: 10%;
+  animation: float-glow 12s ease-in-out infinite alternate;
+}
+
+.hero-glow-two {
+  bottom: -350px;
+  right: 5%;
+  background: rgba(37, 99, 235, 0.10);
+  animation: float-glow 15s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes float-glow {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(70px, 50px) scale(1.15);
+  }
+
+  100% {
+    transform: translate(-40px, 80px) scale(0.95);
+  }
+}
+
+/* Background grid */
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.035) 1px, transparent 1px);
+
+  background-size: 55px 55px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 85%
+  );
+}
+
+/* Staggered text reveal */
+
+.hero-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-delay-1 {
+  animation-delay: 0.15s;
+}
+
+.hero-delay-2 {
+  animation-delay: 0.35s;
+}
+
+.hero-delay-3 {
+  animation-delay: 0.55s;
+}
+
+.hero-delay-4 {
+  animation-delay: 0.75s;
+}
+
+@keyframes reveal-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animated gradient heading */
+
+.hero-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #60a5fa,
+    #38bdf8,
+    #2563eb
+  );
+
+  background-size: 250% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: gradient-flow 6s linear infinite;
+}
+
+@keyframes gradient-flow {
+  to {
+    background-position: 250% center;
+  }
+}
+
+/* CTA button interactions */
+
+.hero-button {
+  transition: all 0.3s ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 35px rgba(37, 99, 235, 0.35);
+}
+
+/* Scroll indicator */
+
+.scroll-line {
+  height: 55px;
+  width: 2px;
+
+  background: linear-gradient(
+    to bottom,
+    #2563eb,
+    transparent
+  );
+
+  animation: scroll-flow 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-flow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(0.65);
+    transform-origin: top;
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* =========================================
+   FOUNDR AI INTRO SCREEN
+========================================= */
+
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  background: #050505;
+
+  opacity: 1;
+  visibility: visible;
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+  z-index: 2;
+
+  animation: intro-content-in 0.9s ease forwards;
+}
+
+/* Logo */
+
+.intro-logo {
+  width: 75px;
+  height: 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    135deg,
+    #3b82f6,
+    #1d4ed8
+  );
+
+  box-shadow: 0 0 55px rgba(37, 99, 235, 0.45);
+
+  animation: logo-pulse 1.5s ease-in-out infinite alternate;
+}
+
+.intro-logo span {
+  color: white;
+  font-size: 43px;
+  font-weight: 900;
+}
+
+/* Intro title */
+
+.intro-title {
+  margin-top: 22px;
+
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+
+  color: white;
+}
+
+.intro-title span {
+  color: #3b82f6;
+}
+
+/* Intro subtitle */
+
+.intro-subtitle {
+  margin-top: 10px;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 5px;
+
+  color: #71717a;
+}
+
+/* Loading progress */
+
+.intro-progress {
+  margin-top: 38px;
+
+  width: 180px;
+  height: 3px;
+
+  overflow: hidden;
+  border-radius: 10px;
+
+  background: #27272a;
+}
+
+.intro-progress-fill {
+  width: 0%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #3b82f6;
+  box-shadow: 0 0 12px #3b82f6;
+
+  animation: intro-loading 1.6s ease forwards;
+}
+
+/* Ambient intro glow */
+
+.intro-glow {
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.15);
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+/* Intro animations */
+
+@keyframes intro-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes logo-pulse {
+  from {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.25);
+    transform: scale(1);
+  }
+
+  to {
+    box-shadow: 0 0 55px rgba(37, 99, 235, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes intro-loading {
+  to {
+    width: 100%;
+  }
+}
+
+/* Intro exit transition */
+
+.intro-exit {
+  animation: intro-screen-exit 0.5s ease forwards;
+}
+
+@keyframes intro-screen-exit {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* =========================================
+   RESPONSIVE STYLES
+========================================= */
+
+@media (max-width: 640px) {
+  .hero-glow {
+    width: 300px;
+    height: 300px;
+    filter: blur(90px);
+  }
+
+  .intro-logo {
+    width: 65px;
+    height: 65px;
+  }
+
+  .intro-logo span {
+    font-size: 36px;
+  }
+
+  .intro-title {
+    font-size: 32px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY: REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .workflow-track,
+  .workflow-pulse,
+  .hero-glow,
+  .hero-reveal,
+  .hero-gradient-text,
+  .scroll-line,
+  .intro-content,
+  .intro-logo,
+  .intro-progress-fill,
+  .intro-exit {
+    animation: none !important;
+  }
+
+  .hero-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .intro-progress-fill {
+    width: 100%;
+  }
 }
