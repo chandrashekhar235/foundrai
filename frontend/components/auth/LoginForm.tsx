@@ -199,27 +199,36 @@ router.push("/");
 
       {/* Google Button */}
 
+
 <GoogleLogin
   onSuccess={async (credentialResponse) => {
     try {
+      if (!credentialResponse.credential) {
+        throw new Error("Google authentication failed");
+      }
+
       const res = await api.post("/auth/google", {
         credential: credentialResponse.credential,
       });
 
-      console.log(res.data);
+      login(res.data.user, res.data.token);
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      router.push("/");
+    } catch (error: any) {
+      console.error("Google Login Error:", error);
 
-      window.location.href = "/";
-    } catch (error) {
-      console.error(error);
+      alert(
+        error.response?.data?.message ||
+        error.message ||
+        "Google Login Failed"
+      );
     }
   }}
   onError={() => {
-    console.log("Google Login Failed");
+    console.error("Google Login Failed");
   }}
 />
+
       {/* Signup */}
 
       <p className="mt-8 text-center text-slate-400">
