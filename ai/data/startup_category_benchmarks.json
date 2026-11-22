@@ -1,0 +1,357 @@
+{
+    "dataset": "Kaggle Startup Success Prediction",
+    "total_startups": 923,
+    "overall_historical_acquisition_rate": 0.6468,
+    "categories": {
+        "advertising": {
+            "sample_size": 62,
+            "acquired_count": 45,
+            "closed_count": 17,
+            "historical_acquisition_rate": 0.7258,
+            "historical_closure_rate": 0.2742,
+            "median_funding_usd": 8853683.5,
+            "median_relationships": 8.0,
+            "median_milestones": 2.0
+        },
+        "analytics": {
+            "sample_size": 19,
+            "acquired_count": 16,
+            "closed_count": 3,
+            "historical_acquisition_rate": 0.8421,
+            "historical_closure_rate": 0.1579,
+            "median_funding_usd": 8950000.0,
+            "median_relationships": 11.0,
+            "median_milestones": 2.0
+        },
+        "automotive": {
+            "sample_size": 2,
+            "acquired_count": 1,
+            "closed_count": 1,
+            "historical_acquisition_rate": 0.5,
+            "historical_closure_rate": 0.5,
+            "median_funding_usd": 26000000.0,
+            "median_relationships": 9.0,
+            "median_milestones": 1.5
+        },
+        "biotech": {
+            "sample_size": 34,
+            "acquired_count": 22,
+            "closed_count": 12,
+            "historical_acquisition_rate": 0.6471,
+            "historical_closure_rate": 0.3529,
+            "median_funding_usd": 43350000.0,
+            "median_relationships": 4.0,
+            "median_milestones": 1.0
+        },
+        "cleantech": {
+            "sample_size": 23,
+            "acquired_count": 10,
+            "closed_count": 13,
+            "historical_acquisition_rate": 0.4348,
+            "historical_closure_rate": 0.5652,
+            "median_funding_usd": 25500000.0,
+            "median_relationships": 4.0,
+            "median_milestones": 1.0
+        },
+        "consulting": {
+            "sample_size": 3,
+            "acquired_count": 2,
+            "closed_count": 1,
+            "historical_acquisition_rate": 0.6667,
+            "historical_closure_rate": 0.3333,
+            "median_funding_usd": 19550000.0,
+            "median_relationships": 18.0,
+            "median_milestones": 1.0
+        },
+        "ecommerce": {
+            "sample_size": 25,
+            "acquired_count": 11,
+            "closed_count": 14,
+            "historical_acquisition_rate": 0.44,
+            "historical_closure_rate": 0.56,
+            "median_funding_usd": 2600000.0,
+            "median_relationships": 5.0,
+            "median_milestones": 2.0
+        },
+        "education": {
+            "sample_size": 4,
+            "acquired_count": 3,
+            "closed_count": 1,
+            "historical_acquisition_rate": 0.75,
+            "historical_closure_rate": 0.25,
+            "median_funding_usd": 11036918.5,
+            "median_relationships": 9.5,
+            "median_milestones": 2.5
+        },
+        "enterprise": {
+            "sample_size": 73,
+            "acquired_count": 56,
+            "closed_count": 17,
+            "historical_acquisition_rate": 0.7671,
+            "historical_closure_rate": 0.2329,
+            "median_funding_usd": 11000000.0,
+            "median_relationships": 8.0,
+            "median_milestones": 2.0
+        },
+        "fashion": {
+            "sample_size": 8,
+            "acquired_count": 5,
+            "closed_count": 3,
+            "historical_acquisition_rate": 0.625,
+            "historical_closure_rate": 0.375,
+            "median_funding_usd": 2625000.0,
+            "median_relationships": 4.5,
+            "median_milestones": 2.5
+        },
+        "finance": {
+            "sample_size": 6,
+            "acquired_count": 4,
+            "closed_count": 2,
+            "historical_acquisition_rate": 0.6667,
+            "historical_closure_rate": 0.3333,
+            "median_funding_usd": 20664352.0,
+            "median_relationships": 7.0,
+            "median_milestones": 2.0
+        },
+        "games_video": {
+            "sample_size": 52,
+            "acquired_count": 31,
+            "closed_count": 21,
+            "historical_acquisition_rate": 0.5962,
+            "historical_closure_rate": 0.4038,
+            "median_funding_usd": 8700000.0,
+            "median_relationships": 5.5,
+            "median_milestones": 2.0
+        },
+        "hardware": {
+            "sample_size": 27,
+            "acquired_count": 11,
+            "closed_count": 16,
+            "historical_acquisition_rate": 0.4074,
+            "historical_closure_rate": 0.5926,
+            "median_funding_usd": 20000000.0,
+            "median_relationships": 3.0,
+            "median_milestones": 1.0
+        },
+        "health": {
+            "sample_size": 3,
+            "acquired_count": 3,
+            "closed_count": 0,
+            "historical_acquisition_rate": 1.0,
+            "historical_closure_rate": 0.0,
+            "median_funding_usd": 23500000.0,
+            "median_relationships": 13.0,
+            "median_milestones": 2.0
+        },
+        "hospitality": {
+            "sample_size": 1,
+            "acquired_count": 1,
+            "closed_count": 0,
+            "historical_acquisition_rate": 1.0,
+            "historical_closure_rate": 0.0,
+            "median_funding_usd": 3750000.0,
+            "median_relationships": 12.0,
+            "median_milestones": 2.0
+        },
+        "manufacturing": {
+            "sample_size": 2,
+            "acquired_count": 0,
+            "closed_count": 2,
+            "historical_acquisition_rate": 0.0,
+            "historical_closure_rate": 1.0,
+            "median_funding_usd": 2331000.0,
+            "median_relationships": 4.5,
+            "median_milestones": 0.0
+        },
+        "medical": {
+            "sample_size": 7,
+            "acquired_count": 4,
+            "closed_count": 3,
+            "historical_acquisition_rate": 0.5714,
+            "historical_closure_rate": 0.4286,
+            "median_funding_usd": 28200000.0,
+            "median_relationships": 3.0,
+            "median_milestones": 0.0
+        },
+        "messaging": {
+            "sample_size": 11,
+            "acquired_count": 7,
+            "closed_count": 4,
+            "historical_acquisition_rate": 0.6364,
+            "historical_closure_rate": 0.3636,
+            "median_funding_usd": 3350000.0,
+            "median_relationships": 4.0,
+            "median_milestones": 2.0
+        },
+        "mobile": {
+            "sample_size": 79,
+            "acquired_count": 52,
+            "closed_count": 27,
+            "historical_acquisition_rate": 0.6582,
+            "historical_closure_rate": 0.3418,
+            "median_funding_usd": 10000000.0,
+            "median_relationships": 6.0,
+            "median_milestones": 2.0
+        },
+        "music": {
+            "sample_size": 6,
+            "acquired_count": 6,
+            "closed_count": 0,
+            "historical_acquisition_rate": 1.0,
+            "historical_closure_rate": 0.0,
+            "median_funding_usd": 15725000.0,
+            "median_relationships": 12.5,
+            "median_milestones": 3.0
+        },
+        "network_hosting": {
+            "sample_size": 34,
+            "acquired_count": 24,
+            "closed_count": 10,
+            "historical_acquisition_rate": 0.7059,
+            "historical_closure_rate": 0.2941,
+            "median_funding_usd": 13750000.0,
+            "median_relationships": 6.0,
+            "median_milestones": 2.0
+        },
+        "news": {
+            "sample_size": 8,
+            "acquired_count": 7,
+            "closed_count": 1,
+            "historical_acquisition_rate": 0.875,
+            "historical_closure_rate": 0.125,
+            "median_funding_usd": 1530000.0,
+            "median_relationships": 9.5,
+            "median_milestones": 2.0
+        },
+        "other": {
+            "sample_size": 11,
+            "acquired_count": 2,
+            "closed_count": 9,
+            "historical_acquisition_rate": 0.1818,
+            "historical_closure_rate": 0.8182,
+            "median_funding_usd": 13222860.0,
+            "median_relationships": 3.0,
+            "median_milestones": 1.0
+        },
+        "photo_video": {
+            "sample_size": 7,
+            "acquired_count": 5,
+            "closed_count": 2,
+            "historical_acquisition_rate": 0.7143,
+            "historical_closure_rate": 0.2857,
+            "median_funding_usd": 10500000.0,
+            "median_relationships": 7.0,
+            "median_milestones": 3.0
+        },
+        "public_relations": {
+            "sample_size": 25,
+            "acquired_count": 10,
+            "closed_count": 15,
+            "historical_acquisition_rate": 0.4,
+            "historical_closure_rate": 0.6,
+            "median_funding_usd": 8600000.0,
+            "median_relationships": 3.0,
+            "median_milestones": 1.0
+        },
+        "real_estate": {
+            "sample_size": 3,
+            "acquired_count": 1,
+            "closed_count": 2,
+            "historical_acquisition_rate": 0.3333,
+            "historical_closure_rate": 0.6667,
+            "median_funding_usd": 500000.0,
+            "median_relationships": 7.0,
+            "median_milestones": 2.0
+        },
+        "search": {
+            "sample_size": 12,
+            "acquired_count": 7,
+            "closed_count": 5,
+            "historical_acquisition_rate": 0.5833,
+            "historical_closure_rate": 0.4167,
+            "median_funding_usd": 6150000.0,
+            "median_relationships": 6.0,
+            "median_milestones": 2.0
+        },
+        "security": {
+            "sample_size": 19,
+            "acquired_count": 15,
+            "closed_count": 4,
+            "historical_acquisition_rate": 0.7895,
+            "historical_closure_rate": 0.2105,
+            "median_funding_usd": 12000000.0,
+            "median_relationships": 5.0,
+            "median_milestones": 1.0
+        },
+        "semiconductor": {
+            "sample_size": 35,
+            "acquired_count": 24,
+            "closed_count": 11,
+            "historical_acquisition_rate": 0.6857,
+            "historical_closure_rate": 0.3143,
+            "median_funding_usd": 26000000.0,
+            "median_relationships": 3.0,
+            "median_milestones": 0.0
+        },
+        "social": {
+            "sample_size": 14,
+            "acquired_count": 8,
+            "closed_count": 6,
+            "historical_acquisition_rate": 0.5714,
+            "historical_closure_rate": 0.4286,
+            "median_funding_usd": 1417500.0,
+            "median_relationships": 5.0,
+            "median_milestones": 2.0
+        },
+        "software": {
+            "sample_size": 153,
+            "acquired_count": 101,
+            "closed_count": 52,
+            "historical_acquisition_rate": 0.6601,
+            "historical_closure_rate": 0.3399,
+            "median_funding_usd": 13000000.0,
+            "median_relationships": 5.0,
+            "median_milestones": 1.0
+        },
+        "sports": {
+            "sample_size": 1,
+            "acquired_count": 1,
+            "closed_count": 0,
+            "historical_acquisition_rate": 1.0,
+            "historical_closure_rate": 0.0,
+            "median_funding_usd": 2000000.0,
+            "median_relationships": 16.0,
+            "median_milestones": 2.0
+        },
+        "transportation": {
+            "sample_size": 2,
+            "acquired_count": 2,
+            "closed_count": 0,
+            "historical_acquisition_rate": 1.0,
+            "historical_closure_rate": 0.0,
+            "median_funding_usd": 63852185.0,
+            "median_relationships": 26.5,
+            "median_milestones": 4.0
+        },
+        "travel": {
+            "sample_size": 8,
+            "acquired_count": 7,
+            "closed_count": 1,
+            "historical_acquisition_rate": 0.875,
+            "historical_closure_rate": 0.125,
+            "median_funding_usd": 2500000.0,
+            "median_relationships": 7.0,
+            "median_milestones": 2.5
+        },
+        "web": {
+            "sample_size": 144,
+            "acquired_count": 93,
+            "closed_count": 51,
+            "historical_acquisition_rate": 0.6458,
+            "historical_closure_rate": 0.3542,
+            "median_funding_usd": 4300000.0,
+            "median_relationships": 6.0,
+            "median_milestones": 2.0
+        }
+    }
+}
